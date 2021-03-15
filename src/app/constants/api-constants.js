@@ -1,0 +1,1 @@
+export const GET_RESTAURANTS_LIST = 'https://serverfake.herokuapp.com/topRamen';
