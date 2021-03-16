@@ -1,4 +1,14 @@
 .restaurants {
     max-width: 70rem;
     margin: 0 auto;
+    min-height: calc(100vh - 12rem);
+
+    &_loading {
+        padding: 5rem 0;
+        text-align: center;
+    }
+
+    &_no-data {
+        padding: 5rem 0;
+    }
 }

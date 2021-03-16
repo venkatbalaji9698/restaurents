@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spin } from 'antd';
+import { Spin, Empty } from 'antd';
 
 import { getRestaurantsList } from '../../redux/actions/restaurantsActions';
 import FilterTab from '../../components/filter-tab';
+import CardsList from '../../components/cards-list';
 
 import './index.scss';
 
@@ -13,7 +14,8 @@ const Restaurants = () => {
         restaurantsListResponse: state.restaurantsReducer.restaurantsListResponse
     }));
 
-    const [restaurantsList, setRestaurantsList] = useState(null);
+    const [restaurantsList, setRestaurantsList] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         dispatch(getRestaurantsList());
@@ -22,20 +24,47 @@ const Restaurants = () => {
     useEffect(() => {
         if (restaurantsListResponse && restaurantsListResponse.list) {
             setRestaurantsList(restaurantsListResponse.list);
+            setLoading(false);
         }
     }, [restaurantsListResponse])
 
     const onSearch = (val) => {
-        console.log(val);
+        const newList = restaurantsListResponse.list.filter(item => {
+            if (item.Brand.toLowerCase().includes(val)) {
+                return true;
+            }
+            if (item.Style.toLowerCase().includes(val)) {
+                return true;
+            }
+            if (item.Stars.toString().includes(val)) {
+                return true;
+            }
+            if (item["Top Ten"].toLowerCase().includes(val)) {
+                return true;
+            }
+            return false;
+        });
+        setRestaurantsList(newList);
+    }
+
+    const getContent = () => {
+        if (isLoading) {
+            return (
+                <div className="restaurants_loading">
+                    <Spin />
+                </div>
+            )
+        }
+        if (restaurantsList.length) {
+            return <CardsList restaurantsList={restaurantsList} />;
+        }
+        return <Empty className="restaurants_no-data" />;
     }
 
     return (
         <div className="restaurants">
             <FilterTab onSearch={onSearch} />
-            {restaurantsListResponse.isLoading &&
-                <Spin />
-            }
-            Restaurants
+            {getContent()}
         </div>
     )
 }
