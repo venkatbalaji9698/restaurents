@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Spin, Empty } from 'antd';
 
-import { getRestaurantsList } from '../../redux/actions/restaurantsActions';
+// import { getRestaurantsList } from '../../redux/actions/restaurantsActions';
 import FilterTab from '../../components/filter-tab';
 import CardsList from '../../components/cards-list';
 
 import './index.scss';
 
 const Restaurants = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const { restaurantsListResponse } = useSelector(state => ({
         restaurantsListResponse: state.restaurantsReducer.restaurantsListResponse
     }));
