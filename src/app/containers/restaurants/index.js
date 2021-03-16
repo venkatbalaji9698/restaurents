@@ -18,7 +18,7 @@ const Restaurants = () => {
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        dispatch(getRestaurantsList());
+        // dispatch(getRestaurantsList());
     }, [])
 
     useEffect(() => {
